@@ -24,6 +24,7 @@ namespace Reserva_C.Models
          public Pelicula Pelicula { get; set; }
          public List<Reserva> Reservas { get; set; }
          public Sala Sala { get; set; }
-         
+        public int IdFuncion { get; set; }
+
     }
 }
