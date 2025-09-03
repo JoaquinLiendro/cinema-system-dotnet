@@ -16,6 +16,7 @@ namespace Reserva_C.Models
         public Cliente Cliente { get; set; }
         public DateTime FechaAlta { get; set; }
         public Funcion Funcion { get; set; }
+        public int IdReserva { get; set; }
 
     }
 }
