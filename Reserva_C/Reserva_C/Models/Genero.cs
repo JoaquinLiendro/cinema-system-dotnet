@@ -1,6 +1,13 @@
 ﻿namespace Reserva_C.Models
 {
-    public class Genero
+    public enum Genero
     {
+        Terror,
+        Comedia,
+        Tragedia,
+        Accion,
+        Romance,
+        Misterio,
+        CineCatastrofe
     }
 }
