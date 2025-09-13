@@ -18,5 +18,13 @@ namespace Reserva_C.Models
         public Funcion Funcion { get; set; }
         
 
+       
+        
+        
+
+        //Propiedad Relacional
+
+        public int ClienteId { get; set; }
+
     }
 }
