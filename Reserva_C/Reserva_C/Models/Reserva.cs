@@ -17,5 +17,13 @@ namespace Reserva_C.Models
         public DateTime FechaAlta { get; set; }
         public Funcion Funcion { get; set; }
 
+       
+        
+        
+
+        //Propiedad Relacional
+
+        public int ClienteId { get; set; }
+
     }
 }
