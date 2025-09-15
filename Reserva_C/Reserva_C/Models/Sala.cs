@@ -10,8 +10,9 @@ namespace Reserva_C.Models
         //- Funciones
         public int Id { get; set; }
         public int Numero { get; set; }
-        public TipoSala TipoSala { get; set; }
         public int CapacidadButacas { get; set; }
+        public TipoSala TipoSala { get; set; }
+        public int IdTipoSala { get; set; }
         public List<Funcion> Funciones { get; set; }
     }
 }

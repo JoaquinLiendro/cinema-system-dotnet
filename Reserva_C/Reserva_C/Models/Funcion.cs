@@ -18,7 +18,7 @@ namespace Reserva_C.Models
         //- Sala
 
 
-        public int IdFuncion { get; set; }
+        public int Id { get; set; }
         [Required(ErrorMessage = "el campo {0} es requerido")]
         public DateOnly Fecha { get; set; }
         [Required(ErrorMessage = "el campo {0} es requerido")]

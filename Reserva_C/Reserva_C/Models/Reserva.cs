@@ -11,7 +11,7 @@ namespace Reserva_C.Models
         //        - FechaAlta
         //        - Funcion
 
-        public int IdReserva { get; set; }
+        public int Id { get; set; }
         [Required(ErrorMessage = "el campo {0} es requerido")]
         public bool Activa { get; set; }
         [Required(ErrorMessage = "el campo {0} es requerido")]

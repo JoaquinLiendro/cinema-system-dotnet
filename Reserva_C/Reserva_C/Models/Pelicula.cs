@@ -13,7 +13,7 @@ namespace Reserva_C.Models
         //- Funciones
         //- Genero(enum)
 
-        public int IdPelicula { get; set; }
+        public int Id { get; set; }
         [Required (ErrorMessage = "el campo {0} es requerido")]
         [RegularExpression(@"[a-zA-Z áéíóú]*", ErrorMessage = "solo se admiten caracteres alfabeticos")]
         [StringLength(15, MinimumLength = 3, ErrorMessage = "el {0} debe estar entre el {2} y el {1}")]
