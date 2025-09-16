@@ -21,6 +21,7 @@ namespace Reserva_C.Models
         [Required(ErrorMessage = "el campo {0} es requerido")]
         public DateOnly FechaAlta { get; set; }
         public Funcion Funcion { get; set; }
+        public int FuncionId { get; set; }
         
 
        

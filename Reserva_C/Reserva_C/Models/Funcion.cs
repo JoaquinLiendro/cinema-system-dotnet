@@ -24,7 +24,7 @@ namespace Reserva_C.Models
         [Required(ErrorMessage = "el campo {0} es requerido")]
         public TimeOnly Hora { get; set; }
         [Required(ErrorMessage = "el campo {0} es requerido")]
-        [RegularExpression(@"[a-zA-Z áéíóú]*", ErrorMessage = "solo se admiten caracteres alfabeticos")]
+        [RegularExpression(@"[a-zA-Z áéíóú 0-9]*", ErrorMessage = "{0} solo admite caracteres alfabeticos y numericos.")]
         [StringLength(100, MinimumLength = 20, ErrorMessage = "el {0} debe estar entre el {2} y el {1}")]
         public string Descripcion { get; set; }
         [Required(ErrorMessage = "el campo {0} es requerido")]
@@ -35,8 +35,8 @@ namespace Reserva_C.Models
         public Pelicula Pelicula { get; set; }
         public List<Reserva> Reservas { get; set; }
         public Sala Sala { get; set; }
-        public int IdSala { get; set; }
-        public int IdPelicula { get; set; }
+        public int SalaId { get; set; }
+        public int PeliculaId { get; set; }
 
 
     }

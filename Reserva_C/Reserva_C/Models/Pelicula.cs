@@ -15,11 +15,11 @@ namespace Reserva_C.Models
 
         public int Id { get; set; }
         [Required (ErrorMessage = "el campo {0} es requerido")]
-        [RegularExpression(@"[a-zA-Z áéíóú]*", ErrorMessage = "solo se admiten caracteres alfabeticos")]
+        [RegularExpression(@"[a-zA-Z áéíóú 0-9]*", ErrorMessage = "{0} solo admite caracteres alfabeticos y numericos.")]
         [StringLength(15, MinimumLength = 3, ErrorMessage = "el {0} debe estar entre el {2} y el {1}")]
         public string Titulo { get; set; }
         [Required(ErrorMessage = "el campo {0} es requerido")]
-        [RegularExpression(@"[a-zA-Z áéíóú]*", ErrorMessage = "solo se admiten caracteres alfabeticos")]
+        [RegularExpression(@"[a-zA-Z áéíóú 0-9]*", ErrorMessage = "{0} solo admite caracteres alfabeticos y numericos.")]
         [StringLength(100, MinimumLength = 20, ErrorMessage = "el {0} debe estar entre el {2} y el {1}")]
         public string Desc { get; set; }
         [Required(ErrorMessage = "el campo {0} es requerido")]
@@ -28,6 +28,7 @@ namespace Reserva_C.Models
         public string Foto { get; set; }
         public List<Funcion> Funciones { get; set; }
         public Genero Genero { get; set; }
+        public int GeneroId { get; set; }
 
 
     }
