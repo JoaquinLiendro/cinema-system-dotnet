@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Reserva_C.Models.Cliente">
+    <Position X="6.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Cliente.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Reservas" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Reserva_C.Models.Empleado">
+    <Position X="4" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Empleado.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reserva_C.Models.Funcion">
+    <Position X="12.25" Y="6" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAIAAAgAAEAAAAAAQgBAEAAAAAEAAAAAAQAAAE=</HashCode>
+      <FileName>Models\Funcion.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Sala" />
+      <Property Name="Pelicula" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Reservas" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Reserva_C.Models.Pelicula">
+    <Position X="15" Y="6.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAEAAAAEIAAAAAAAAAAAAAYAAAABA=</HashCode>
+      <FileName>Models\Pelicula.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Genero" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Funciones" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Reserva_C.Models.Persona">
+    <Position X="5.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAAEEACAAgAAAAAEAAAAAAQAAAgAAAAA=</HashCode>
+      <FileName>Models\Persona.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reserva_C.Models.Reserva">
+    <Position X="9.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAACAEAABCgAAAAAAAAAAEgAAAAAAQAAAA=</HashCode>
+      <FileName>Models\Reserva.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Cliente" />
+      <Property Name="Funcion" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Reserva_C.Models.Sala">
+    <Position X="12.25" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAEAABAAAAAEAAAAAIAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Models\Sala.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TipoSala" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Funciones" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Reserva_C.Models.TipoSala">
+    <Position X="9.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAgAAQAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\TipoSala.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Reserva_C.Models.Genero">
+    <Position X="15.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAABAAAAIAgBAAAAQAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Models\Genero.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Calibri Light" Size="10" />
+</ClassDiagram>
