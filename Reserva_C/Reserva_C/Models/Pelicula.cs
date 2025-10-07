@@ -14,20 +14,21 @@ namespace Reserva_C.Models
         //- Genero(enum)
 
         public int Id { get; set; }
-        [Required (ErrorMessage = "el campo {0} es requerido")]
-        [RegularExpression(@"[a-zA-Z áéíóú 0-9]*", ErrorMessage = "{0} solo admite caracteres alfabeticos y numericos.")]
-        [StringLength(15, MinimumLength = 3, ErrorMessage = "el {0} debe estar entre el {2} y el {1}")]
+        [Required(ErrorMessage = "el campo {0} es requerido")]
+        [StringLength(40, MinimumLength = 2, ErrorMessage = "el {0} debe estar entre el {2} y el {1}")]
         public string Titulo { get; set; }
         [Required(ErrorMessage = "el campo {0} es requerido")]
         [RegularExpression(@"[a-zA-Z áéíóú 0-9]*", ErrorMessage = "{0} solo admite caracteres alfabeticos y numericos.")]
         [StringLength(100, MinimumLength = 20, ErrorMessage = "el {0} debe estar entre el {2} y el {1}")]
-        public string Desc { get; set; }
+        [DataType(DataType.MultilineText)]
+        public string Descripcion { get; set; }
         [Required(ErrorMessage = "el campo {0} es requerido")]
         public DateOnly FechaLanzamiento { get; set; }
         [Required(ErrorMessage = "el campo {0} es requerido")]
-        public string Foto { get; set; }
+        public string Foto { get; set; } = "sin_foto.jpg";
         public List<Funcion> Funciones { get; set; }
         public Genero Genero { get; set; }
+        [Required(ErrorMessage = "el campo {0} es requerido")]
         public int GeneroId { get; set; }
 
 
