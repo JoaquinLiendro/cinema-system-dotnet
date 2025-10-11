@@ -9,23 +9,23 @@ namespace Reserva_C.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "{0} es requerido")]
-        [StringLength(50, MinimumLength = 8, ErrorMessage = "{0} debe tener entre {2} y {1} caracteres")]
-        [RegularExpression(@"^[\w\W]+$", ErrorMessage = "{0} puede contener letras, números y signos.")]
+        [StringLength(20, MinimumLength = 4, ErrorMessage = "{0} debe tener entre {2} y {1} caracteres")]
         [Display(Name="Nombre de usuario")]
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "{0} es requerido")]
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "{0} solo puede contener letras.")]
-        [StringLength(50, MinimumLength = 2, ErrorMessage = "{0} debe tener entre {2} y {1} caracteres.")]
+        [StringLength(10, MinimumLength = 2, ErrorMessage = "{0} debe tener entre {2} y {1} caracteres.")]
 
         public string Nombre { get; set; }
 
         [Required(ErrorMessage = "{0} es requerido")]
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "{0} solo puede contener letras.")]
-        [StringLength(50, MinimumLength = 2, ErrorMessage = "{0} debe tener entre {2} y {1} caracteres.")]
+        [StringLength(15, MinimumLength = 2, ErrorMessage = "{0} debe tener entre {2} y {1} caracteres.")]
         public string Apellido { get; set; }
 
-        [StringLength(20, MinimumLength = 6, ErrorMessage = "{0} debe tener entre {2} y {1} caracteres")]
+        [StringLength(8, MinimumLength = 6, ErrorMessage = "{0} debe tener entre {2} y {1} caracteres")]
+        [RegularExpression(@"^\d+$", ErrorMessage = "{0} solo puede contener numeros.")]
         public string DNI { get; set; }
 
         [RegularExpression(@"^\d{7,15}$", ErrorMessage = "{0} debe contener solo números y tener entre 7 y 15 dígitos.")]
@@ -38,7 +38,7 @@ namespace Reserva_C.Models
 
         [Required(ErrorMessage = "{0} es requerido")]
         [EmailAddress(ErrorMessage = "Formato {0} inválido.")]
-        [StringLength(100)]
+        [StringLength(30, ErrorMessage = "{0} debe contener menos de {1} caracteres")]
         public string Email { get; set; }
     }
 }
