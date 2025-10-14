@@ -14,6 +14,9 @@ namespace Reserva_C.Data
 
         public DbSet<Empleado> Empleados { get; set; }
 
+        public DbSet<Funcion> Funciones { get; set; }
+        public DbSet<Pelicula> Peliculas{ get; set; }
+
 
     }
 }
