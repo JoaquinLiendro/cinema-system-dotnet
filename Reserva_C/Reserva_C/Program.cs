@@ -12,6 +12,8 @@ namespace Reserva_C
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddDbContext<ReservaContext>(options => options.UseInMemoryDatabase("Reserva DataBase"));
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
@@ -25,7 +27,7 @@ namespace Reserva_C
                 app.UseHsts();
             }
 
-            builder.Services.AddDbContext<ReservaContext>(options => options.UseInMemoryDatabase("Reserva DataBase"));
+            
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
