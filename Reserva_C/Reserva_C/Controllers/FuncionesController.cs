@@ -59,12 +59,12 @@ namespace Reserva_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Fecha,Hora,Descripcion,ButacasDisponibles,Confimrada,SalaId,PeliculaId")] Funcion funcion)
+        public IActionResult Create([Bind("Id,Fecha,Hora,Descripcion,ButacasDisponibles,Confimrada,SalaId,PeliculaId")] Funcion funcion)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(funcion);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["PeliculaId"] = new SelectList(_context.Peliculas, "Id", "Descripcion", funcion.PeliculaId);
