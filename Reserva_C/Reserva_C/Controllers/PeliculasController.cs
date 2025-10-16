@@ -26,15 +26,15 @@ namespace Reserva_C.Controllers
         }
 
         // GET: Peliculas/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Peliculas == null)
             {
                 return NotFound();
             }
 
-            var pelicula = await _context.Peliculas
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var pelicula = _context.Peliculas
+                .FirstOrDefault(m => m.Id == id);
             if (pelicula == null)
             {
                 return NotFound();
