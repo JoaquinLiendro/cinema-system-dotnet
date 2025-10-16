@@ -20,9 +20,9 @@ namespace Reserva_C.Controllers
         }
 
         // GET: Empleados
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Empleados.ToListAsync());
+            return View(_context.Empleados.ToList());
         }
 
         // GET: Empleados/Details/5

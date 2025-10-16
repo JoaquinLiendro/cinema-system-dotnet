@@ -20,21 +20,20 @@ namespace Reserva_C.Controllers
         }
 
         // GET: Peliculas
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Peliculas.ToListAsync());
+            return View(_context.Peliculas.ToList());
         }
 
         // GET: Peliculas/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Peliculas == null)
             {
                 return NotFound();
             }
 
-            var pelicula = await _context.Peliculas
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var pelicula = _context.Peliculas.FirstOrDefault(m => m.Id == id);
             if (pelicula == null)
             {
                 return NotFound();
@@ -54,12 +53,12 @@ namespace Reserva_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Titulo,Descripcion,FechaLanzamiento,Foto,Genero,GeneroId")] Pelicula pelicula)
+        public IActionResult Create([Bind("Id,Titulo,Descripcion,FechaLanzamiento,Foto,Genero,GeneroId")] Pelicula pelicula)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(pelicula);
-                await _context.SaveChangesAsync();
+                _context.Peliculas.Add(pelicula);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             return View(pelicula);

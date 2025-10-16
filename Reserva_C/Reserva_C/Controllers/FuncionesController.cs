@@ -20,24 +20,24 @@ namespace Reserva_C.Controllers
         }
 
         // GET: Funciones
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var reservaContext = _context.Funciones.Include(f => f.Pelicula).Include(f => f.Sala);
-            return View(await reservaContext.ToListAsync());
+            var reservaContext = _context.Funciones;
+            return View(reservaContext.ToList());
         }
 
         // GET: Funciones/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Funciones == null)
             {
                 return NotFound();
             }
 
-            var funcion = await _context.Funciones
+            var funcion = _context.Funciones
                 .Include(f => f.Pelicula)
                 .Include(f => f.Sala)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefault(m => m.Id == id);
             if (funcion == null)
             {
                 return NotFound();
@@ -59,12 +59,12 @@ namespace Reserva_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Fecha,Hora,Descripcion,ButacasDisponibles,Confimrada,SalaId,PeliculaId")] Funcion funcion)
+        public IActionResult Create([Bind("Id,Fecha,Hora,Descripcion,ButacasDisponibles,Confimrada,SalaId,PeliculaId")] Funcion funcion)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(funcion);
-                await _context.SaveChangesAsync();
+                _context.Funciones.Add(funcion);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["PeliculaId"] = new SelectList(_context.Peliculas, "Id", "Descripcion", funcion.PeliculaId);
