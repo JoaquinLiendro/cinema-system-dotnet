@@ -63,7 +63,7 @@ namespace Reserva_C.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(funcion);
+                _context.Funciones.Add(funcion);
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
