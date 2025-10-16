@@ -27,17 +27,17 @@ namespace Reserva_C.Controllers
         }
 
         // GET: Funciones/Details/5
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Funciones == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var funcion = _context.Funciones
+            var funcion = await _context.Funciones
                 .Include(f => f.Pelicula)
                 .Include(f => f.Sala)
-                .FirstOrDefault(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (funcion == null)
             {
                 return NotFound();
