@@ -20,9 +20,9 @@ namespace Reserva_C.Controllers
         }
 
         // GET: Clientes
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Clientes.ToListAsync());
+            return View(_context.Clientes.ToList());
         }
 
         // GET: Clientes/Details/5

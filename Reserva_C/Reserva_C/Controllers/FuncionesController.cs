@@ -20,10 +20,10 @@ namespace Reserva_C.Controllers
         }
 
         // GET: Funciones
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var reservaContext = _context.Funciones.Include(f => f.Pelicula).Include(f => f.Sala);
-            return View(await reservaContext.ToListAsync());
+            var reservaContext = _context.Funciones;
+            return View(reservaContext.ToList());
         }
 
         // GET: Funciones/Details/5

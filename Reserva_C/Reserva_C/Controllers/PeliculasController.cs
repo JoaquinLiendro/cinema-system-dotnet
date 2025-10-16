@@ -20,9 +20,9 @@ namespace Reserva_C.Controllers
         }
 
         // GET: Peliculas
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Peliculas.ToListAsync());
+            return View(_context.Peliculas.ToList());
         }
 
         // GET: Peliculas/Details/5
