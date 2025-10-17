@@ -73,14 +73,14 @@ namespace Reserva_C.Controllers
         }
 
         // GET: Funciones/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Funciones == null)
             {
                 return NotFound();
             }
 
-            var funcion = await _context.Funciones.FindAsync(id);
+            var funcion = _context.Funciones.Find(id);
             if (funcion == null)
             {
                 return NotFound();
@@ -106,8 +106,19 @@ namespace Reserva_C.Controllers
             {
                 try
                 {
-                    _context.Update(funcion);
-                    await _context.SaveChangesAsync();
+                    var funcionEnDb = _context.Funciones.Find(funcion.Id);
+                    if (funcionEnDb != null)
+                    {
+                        funcionEnDb.Descripcion = funcion.Descripcion;
+
+                        _context.Funciones.Update(funcionEnDb);
+                        _context.SaveChanges();
+                    }
+                    else
+                    { 
+                        return NotFound(); 
+                    }
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
