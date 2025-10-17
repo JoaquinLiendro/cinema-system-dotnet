@@ -85,7 +85,7 @@ namespace Reserva_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,Descripcion,FechaLanzamiento,Foto,Genero,GeneroId")] Pelicula pelicula)
+        public IActionResult Edit(int id, [Bind("Id,Titulo,Descripcion,FechaLanzamiento,Foto,Genero,GeneroId")] Pelicula pelicula)
         {
             if (id != pelicula.Id)
             {
@@ -127,15 +127,15 @@ namespace Reserva_C.Controllers
         }
 
         // GET: Peliculas/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var pelicula = await _context.Peliculas
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var pelicula = _context.Peliculas
+                .FirstOrDefault(m => m.Id == id);
             if (pelicula == null)
             {
                 return NotFound();
@@ -147,15 +147,15 @@ namespace Reserva_C.Controllers
         // POST: Peliculas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var pelicula = await _context.Peliculas.FindAsync(id);
+            var pelicula = _context.Peliculas.Find(id);
             if (pelicula != null)
             {
                 _context.Peliculas.Remove(pelicula);
             }
 
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
