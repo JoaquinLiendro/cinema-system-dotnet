@@ -65,14 +65,14 @@ namespace Reserva_C.Controllers
         }
 
         // GET: Peliculas/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Peliculas == null)
             {
                 return NotFound();
             }
 
-            var pelicula = await _context.Peliculas.FindAsync(id);
+            var pelicula = _context.Peliculas.Find(id);
             if (pelicula == null)
             {
                 return NotFound();
@@ -96,8 +96,19 @@ namespace Reserva_C.Controllers
             {
                 try
                 {
-                    _context.Update(pelicula);
-                    await _context.SaveChangesAsync();
+                    var peliculaEnDB = _context.Peliculas.Find(pelicula.Id);
+                    if (peliculaEnDB != null)
+                    {
+                        peliculaEnDB.Titulo = pelicula.Titulo;
+                        peliculaEnDB.Descripcion = pelicula.Descripcion;
+
+                        _context.Peliculas.Update(peliculaEnDB);
+                        _context.SaveChanges();
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
