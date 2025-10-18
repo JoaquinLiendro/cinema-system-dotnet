@@ -16,6 +16,9 @@ namespace Reserva_C.Data
 
         public DbSet<Funcion> Funciones { get; set; }
         public DbSet<Pelicula> Peliculas{ get; set; }
+        public DbSet<Reserva> Reservas { get; set; }
+        public DbSet<Sala> Salas { get; set; }
+        public DbSet<TipoSala> TiposSala { get; set; }
 
         public DbSet<Reserva> reservas { get; set; }
         public DbSet<Sala> Sala { get; set; }
