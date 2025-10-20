@@ -20,23 +20,23 @@ namespace Reserva_C.Controllers
         }
 
         // GET: Salas
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var reservaContext = _context.Salas.Include(s => s.TipoSala);
-            return View(await reservaContext.ToListAsync());
+            var reservaContext = _context.Salas;
+            return View(reservaContext.ToList());
         }
 
         // GET: Salas/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var sala = await _context.Salas
+            var sala = _context.Salas
                 .Include(s => s.TipoSala)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefault(m => m.Id == id);
             if (sala == null)
             {
                 return NotFound();
@@ -57,12 +57,12 @@ namespace Reserva_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Numero,CapacidadButacas,TipoSalaId")] Sala sala)
+        public IActionResult Create([Bind("Id,Numero,CapacidadButacas,TipoSalaId")] Sala sala)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(sala);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["TipoSalaId"] = new SelectList(_context.Set<TipoSala>(), "Id", "Nombre", sala.TipoSalaId);
@@ -70,14 +70,14 @@ namespace Reserva_C.Controllers
         }
 
         // GET: Salas/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var sala = await _context.Salas.FindAsync(id);
+            var sala = _context.Salas.Find(id);
             if (sala == null)
             {
                 return NotFound();
@@ -91,7 +91,7 @@ namespace Reserva_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Numero,CapacidadButacas,TipoSalaId")] Sala sala)
+        public IActionResult Edit(int id, [Bind("Id,Numero,CapacidadButacas,TipoSalaId")] Sala sala)
         {
             if (id != sala.Id)
             {
@@ -103,7 +103,7 @@ namespace Reserva_C.Controllers
                 try
                 {
                     _context.Update(sala);
-                    await _context.SaveChangesAsync();
+                    _context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -123,16 +123,16 @@ namespace Reserva_C.Controllers
         }
 
         // GET: Salas/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var sala = await _context.Salas
+            var sala = _context.Salas
                 .Include(s => s.TipoSala)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefault(m => m.Id == id);
             if (sala == null)
             {
                 return NotFound();
@@ -144,15 +144,15 @@ namespace Reserva_C.Controllers
         // POST: Salas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var sala = await _context.Salas.FindAsync(id);
+            var sala = _context.Salas.Find(id);
             if (sala != null)
             {
                 _context.Salas.Remove(sala);
             }
 
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 

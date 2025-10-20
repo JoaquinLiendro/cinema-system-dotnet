@@ -20,24 +20,24 @@ namespace Reserva_C.Controllers
         }
 
         // GET: Reservas
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var reservaContext = _context.Reservas.Include(r => r.Cliente).Include(r => r.Funcion);
-            return View(await reservaContext.ToListAsync());
+            var reservaContext = _context.Reservas;
+            return View(reservaContext.ToList());
         }
 
         // GET: Reservas/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var reserva = await _context.Reservas
+            var reserva = _context.Reservas
                 .Include(r => r.Cliente)
                 .Include(r => r.Funcion)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefault(m => m.Id == id);
             if (reserva == null)
             {
                 return NotFound();
@@ -59,12 +59,12 @@ namespace Reserva_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Activa,CantButacas,FechaAlta,FuncionId,ClienteId,IdFuncion")] Reserva reserva)
+        public IActionResult Create([Bind("Id,Activa,CantButacas,FechaAlta,FuncionId,ClienteId,IdFuncion")] Reserva reserva)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(reserva);
-                await _context.SaveChangesAsync();
+                _context.Reservas.Add(reserva);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Apellido", reserva.ClienteId);
@@ -73,14 +73,14 @@ namespace Reserva_C.Controllers
         }
 
         // GET: Reservas/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var reserva = await _context.Reservas.FindAsync(id);
+            var reserva = _context.Reservas.Find(id);
             if (reserva == null)
             {
                 return NotFound();
@@ -95,7 +95,7 @@ namespace Reserva_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Activa,CantButacas,FechaAlta,FuncionId,ClienteId,IdFuncion")] Reserva reserva)
+        public IActionResult Edit(int id, [Bind("Id,Activa,CantButacas,FechaAlta,FuncionId,ClienteId,IdFuncion")] Reserva reserva)
         {
             if (id != reserva.Id)
             {
@@ -107,7 +107,7 @@ namespace Reserva_C.Controllers
                 try
                 {
                     _context.Update(reserva);
-                    await _context.SaveChangesAsync();
+                    _context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -128,17 +128,17 @@ namespace Reserva_C.Controllers
         }
 
         // GET: Reservas/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var reserva = await _context.Reservas
+            var reserva = _context.Reservas
                 .Include(r => r.Cliente)
                 .Include(r => r.Funcion)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefault(m => m.Id == id);
             if (reserva == null)
             {
                 return NotFound();
@@ -150,15 +150,15 @@ namespace Reserva_C.Controllers
         // POST: Reservas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var reserva = await _context.Reservas.FindAsync(id);
+            var reserva = _context.Reservas.Find(id);
             if (reserva != null)
             {
                 _context.Reservas.Remove(reserva);
             }
 
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
