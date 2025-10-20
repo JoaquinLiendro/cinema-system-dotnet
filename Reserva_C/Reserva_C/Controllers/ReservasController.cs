@@ -22,7 +22,7 @@ namespace Reserva_C.Controllers
         // GET: Reservas
         public async Task<IActionResult> Index()
         {
-            var reservaContext = _context.Reserva.Include(r => r.Cliente).Include(r => r.Funcion);
+            var reservaContext = _context.Reservas.Include(r => r.Cliente).Include(r => r.Funcion);
             return View(await reservaContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace Reserva_C.Controllers
                 return NotFound();
             }
 
-            var reserva = await _context.Reserva
+            var reserva = await _context.Reservas
                 .Include(r => r.Cliente)
                 .Include(r => r.Funcion)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -80,7 +80,7 @@ namespace Reserva_C.Controllers
                 return NotFound();
             }
 
-            var reserva = await _context.Reserva.FindAsync(id);
+            var reserva = await _context.Reservas.FindAsync(id);
             if (reserva == null)
             {
                 return NotFound();
@@ -135,7 +135,7 @@ namespace Reserva_C.Controllers
                 return NotFound();
             }
 
-            var reserva = await _context.Reserva
+            var reserva = await _context.Reservas
                 .Include(r => r.Cliente)
                 .Include(r => r.Funcion)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -152,10 +152,10 @@ namespace Reserva_C.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var reserva = await _context.Reserva.FindAsync(id);
+            var reserva = await _context.Reservas.FindAsync(id);
             if (reserva != null)
             {
-                _context.Reserva.Remove(reserva);
+                _context.Reservas.Remove(reserva);
             }
 
             await _context.SaveChangesAsync();
@@ -164,7 +164,7 @@ namespace Reserva_C.Controllers
 
         private bool ReservaExists(int id)
         {
-            return _context.Reserva.Any(e => e.Id == id);
+            return _context.Reservas.Any(e => e.Id == id);
         }
     }
 }

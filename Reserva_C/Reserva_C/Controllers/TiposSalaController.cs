@@ -22,7 +22,7 @@ namespace Reserva_C.Controllers
         // GET: TiposSala
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TipoSala.ToListAsync());
+            return View(await _context.TiposSala.ToListAsync());
         }
 
         // GET: TiposSala/Details/5
@@ -33,7 +33,7 @@ namespace Reserva_C.Controllers
                 return NotFound();
             }
 
-            var tipoSala = await _context.TipoSala
+            var tipoSala = await _context.TiposSala
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tipoSala == null)
             {
@@ -73,7 +73,7 @@ namespace Reserva_C.Controllers
                 return NotFound();
             }
 
-            var tipoSala = await _context.TipoSala.FindAsync(id);
+            var tipoSala = await _context.TiposSala.FindAsync(id);
             if (tipoSala == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace Reserva_C.Controllers
                 return NotFound();
             }
 
-            var tipoSala = await _context.TipoSala
+            var tipoSala = await _context.TiposSala
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tipoSala == null)
             {
@@ -139,10 +139,10 @@ namespace Reserva_C.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tipoSala = await _context.TipoSala.FindAsync(id);
+            var tipoSala = await _context.TiposSala.FindAsync(id);
             if (tipoSala != null)
             {
-                _context.TipoSala.Remove(tipoSala);
+                _context.TiposSala.Remove(tipoSala);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace Reserva_C.Controllers
 
         private bool TipoSalaExists(int id)
         {
-            return _context.TipoSala.Any(e => e.Id == id);
+            return _context.TiposSala.Any(e => e.Id == id);
         }
     }
 }

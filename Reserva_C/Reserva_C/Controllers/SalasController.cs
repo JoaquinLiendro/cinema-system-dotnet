@@ -22,7 +22,7 @@ namespace Reserva_C.Controllers
         // GET: Salas
         public async Task<IActionResult> Index()
         {
-            var reservaContext = _context.Sala.Include(s => s.TipoSala);
+            var reservaContext = _context.Salas.Include(s => s.TipoSala);
             return View(await reservaContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace Reserva_C.Controllers
                 return NotFound();
             }
 
-            var sala = await _context.Sala
+            var sala = await _context.Salas
                 .Include(s => s.TipoSala)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (sala == null)
@@ -77,7 +77,7 @@ namespace Reserva_C.Controllers
                 return NotFound();
             }
 
-            var sala = await _context.Sala.FindAsync(id);
+            var sala = await _context.Salas.FindAsync(id);
             if (sala == null)
             {
                 return NotFound();
@@ -130,7 +130,7 @@ namespace Reserva_C.Controllers
                 return NotFound();
             }
 
-            var sala = await _context.Sala
+            var sala = await _context.Salas
                 .Include(s => s.TipoSala)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (sala == null)
@@ -146,10 +146,10 @@ namespace Reserva_C.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var sala = await _context.Sala.FindAsync(id);
+            var sala = await _context.Salas.FindAsync(id);
             if (sala != null)
             {
-                _context.Sala.Remove(sala);
+                _context.Salas.Remove(sala);
             }
 
             await _context.SaveChangesAsync();
@@ -158,7 +158,7 @@ namespace Reserva_C.Controllers
 
         private bool SalaExists(int id)
         {
-            return _context.Sala.Any(e => e.Id == id);
+            return _context.Salas.Any(e => e.Id == id);
         }
     }
 }
