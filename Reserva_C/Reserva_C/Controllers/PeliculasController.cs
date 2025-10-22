@@ -85,7 +85,7 @@ namespace Reserva_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("Id,Titulo,Descripcion,FechaLanzamiento,Foto,Genero,GeneroId")] Pelicula pelicula)
+        public IActionResult Edit(int id, [Bind("Id,Titulo,Descripcion,FechaLanzamiento,Foto,Genero")] Pelicula pelicula)
         {
             if (id != pelicula.Id)
             {
@@ -101,6 +101,10 @@ namespace Reserva_C.Controllers
                     {
                         peliculaEnDB.Titulo = pelicula.Titulo;
                         peliculaEnDB.Descripcion = pelicula.Descripcion;
+                        peliculaEnDB.FechaLanzamiento = pelicula.FechaLanzamiento;
+                        peliculaEnDB.Foto = pelicula.Foto;
+                        peliculaEnDB.Genero = pelicula.Genero;
+                        
 
                         _context.Peliculas.Update(peliculaEnDB);
                         _context.SaveChanges();

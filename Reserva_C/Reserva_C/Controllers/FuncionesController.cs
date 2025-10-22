@@ -110,6 +110,10 @@ namespace Reserva_C.Controllers
                     if (funcionEnDb != null)
                     {
                         funcionEnDb.Descripcion = funcion.Descripcion;
+                        funcionEnDb.Fecha = funcion.Fecha;
+                        funcionEnDb.SalaId = funcion.SalaId;
+                        funcionEnDb.Hora = funcion.Hora;
+                        funcionEnDb.ButacasDisponibles = funcion.ButacasDisponibles;
 
                         _context.Funciones.Update(funcionEnDb);
                         _context.SaveChanges();

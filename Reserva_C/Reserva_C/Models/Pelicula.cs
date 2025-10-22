@@ -18,7 +18,6 @@ namespace Reserva_C.Models
         [StringLength(40, MinimumLength = 2, ErrorMessage = "el {0} debe estar entre el {2} y el {1}")]
         public string Titulo { get; set; }
         [Required(ErrorMessage = "el campo {0} es requerido")]
-        [RegularExpression(@"[a-zA-Z áéíóú 0-9]*", ErrorMessage = "{0} solo admite caracteres alfabeticos y numericos.")]
         [StringLength(100, MinimumLength = 20, ErrorMessage = "el {0} debe estar entre el {2} y el {1}")]
         [DataType(DataType.MultilineText)]
         public string Descripcion { get; set; }
@@ -27,9 +26,8 @@ namespace Reserva_C.Models
         [Required(ErrorMessage = "el campo {0} es requerido")]
         public string Foto { get; set; } = "sin_foto.jpg";
         public List<Funcion> Funciones { get; set; }
-        public Genero Genero { get; set; }
-        [Required(ErrorMessage = "el campo {0} es requerido")]
-        public int GeneroId { get; set; }
+        public Genero Genero { get; set; } 
+        
 
 
     }
