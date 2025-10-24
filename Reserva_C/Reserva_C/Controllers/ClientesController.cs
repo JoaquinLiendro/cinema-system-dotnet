@@ -20,21 +20,21 @@ namespace Reserva_C.Controllers
         }
 
         // GET: Clientes
-        public IActionResult Index()
+        public  IActionResult Index()
         {
             return View(_context.Clientes.ToList());
         }
 
         // GET: Clientes/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public  IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var cliente = await _context.Clientes
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var cliente = _context.Clientes.FirstOrDefault(m => m.Id == id);
+            
             if (cliente == null)
             {
                 return NotFound();
@@ -54,26 +54,26 @@ namespace Reserva_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserName,Nombre,Apellido,DNI,Telefono,Direccion,FechaAlta,Email")] Cliente cliente)
+        public  IActionResult Create([Bind("Id,UserName,Nombre,Apellido,DNI,Telefono,Direccion,Email")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(cliente);
-                await _context.SaveChangesAsync();
+                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             return View(cliente);
         }
 
         // GET: Clientes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var cliente = await _context.Clientes.FindAsync(id);
+            var cliente = _context.Clientes.Find(id);
             if (cliente == null)
             {
                 return NotFound();
@@ -86,7 +86,7 @@ namespace Reserva_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UserName,Nombre,Apellido,DNI,Telefono,Direccion,FechaAlta,Email")] Cliente cliente)
+        public  IActionResult Edit(int id, [Bind("Id,UserName,Nombre,Apellido,DNI,Telefono,Direccion,Email")] Cliente cliente)
         {
             if (id != cliente.Id)
             {
@@ -97,8 +97,21 @@ namespace Reserva_C.Controllers
             {
                 try
                 {
-                    _context.Update(cliente);
-                    await _context.SaveChangesAsync();
+                    var clienteEnBD = _context.Clientes.Find(id);
+                    
+                    if(clienteEnBD != null)
+                    {
+                        clienteEnBD.UserName = cliente.UserName;
+                        clienteEnBD.Nombre = cliente.Nombre;
+                        clienteEnBD.Apellido = cliente.Apellido;    
+                        clienteEnBD.DNI = cliente.DNI;
+                        clienteEnBD.Telefono = cliente.Telefono;
+                        clienteEnBD.Direccion = cliente.Direccion;
+                        clienteEnBD.Email = cliente.Email;
+                        
+                        _context.Update(clienteEnBD);
+                        _context.SaveChanges();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {

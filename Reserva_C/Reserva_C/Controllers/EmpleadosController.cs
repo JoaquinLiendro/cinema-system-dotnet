@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Reserva_C.Data;
+using Reserva_C.Helpers;
 using Reserva_C.Models;
 
 namespace Reserva_C.Controllers
@@ -22,19 +23,19 @@ namespace Reserva_C.Controllers
         // GET: Empleados
         public IActionResult Index()
         {
-            return View(_context.Empleados.ToList());
+            return View( _context.Empleados.ToListAsync());
         }
 
         // GET: Empleados/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public  IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var empleado = await _context.Empleados
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var empleado =  _context.Empleados.FirstOrDefaultAsync(m => m.Id == id);
+            
             if (empleado == null)
             {
                 return NotFound();
@@ -54,26 +55,30 @@ namespace Reserva_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Legajo,Id,UserName,Nombre,Apellido,DNI,Telefono,Direccion,FechaAlta,Email")] Empleado empleado)
+        public  IActionResult Create([Bind("Id,UserName,Nombre,Apellido,DNI,Telefono,Direccion,Email")] Empleado empleado)
         {
             if (ModelState.IsValid)
             {
+               
+                empleado.Legajo = Generadores.GetNextLegajo(_context); ;
                 _context.Add(empleado);
-                await _context.SaveChangesAsync();
+                
+                
+                _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(empleado);
         }
 
         // GET: Empleados/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public  IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var empleado = await _context.Empleados.FindAsync(id);
+            var empleado = _context.Empleados.Find(id);
             if (empleado == null)
             {
                 return NotFound();
@@ -86,19 +91,38 @@ namespace Reserva_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Legajo,Id,UserName,Nombre,Apellido,DNI,Telefono,Direccion,FechaAlta,Email")] Empleado empleado)
+        public IActionResult Edit(int id, [Bind("Id,UserName,Nombre,DNI,Apellido,Telefono,Direccion,Email")] Empleado empleado)
         {
             if (id != empleado.Id)
             {
                 return NotFound();
             }
-
+            
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(empleado);
-                    await _context.SaveChangesAsync();
+                    var empleadoEnDB = _context.Empleados.Find(id);
+                    
+                    if (empleadoEnDB != null)
+                    {
+                        empleadoEnDB.UserName = empleado.UserName;
+                        empleadoEnDB.Nombre = empleado.Nombre;
+                        empleadoEnDB.Apellido = empleado.Apellido;
+                        empleadoEnDB.DNI = empleado.DNI;
+                        empleadoEnDB.Telefono = empleado.Telefono;
+                        empleadoEnDB.Direccion = empleado.Direccion;
+                        empleadoEnDB.Email = empleado.Email;
+                       
+                        _context.Update(empleadoEnDB);
+                        _context.SaveChanges();
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+
+                    
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -117,15 +141,14 @@ namespace Reserva_C.Controllers
         }
 
         // GET: Empleados/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var empleado = await _context.Empleados
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var empleado =  _context.Empleados.FirstOrDefault(m => m.Id == id);
             if (empleado == null)
             {
                 return NotFound();
