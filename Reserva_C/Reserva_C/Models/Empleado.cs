@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using Reserva_C.Data;
+using Reserva_C.Helpers;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.ConstrainedExecution;
 
 namespace Reserva_C.Models
@@ -6,11 +9,7 @@ namespace Reserva_C.Models
 
     public class Empleado : Persona 
     {
-
-        //private static int proximoLegajo = 1;
-
-        [Required(ErrorMessage = "{0} es requerido")]
-
+       
         public int Legajo { get; set; } 
 
         

@@ -61,7 +61,11 @@ namespace Reserva_C.Controllers
         {
             if (ModelState.IsValid)
             {
+               
+                empleado.Legajo = Generadores.GetNextLegajo(_context); ;
                 _context.Add(empleado);
+                
+                
                 _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -89,7 +93,7 @@ namespace Reserva_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("Legajo,Id,UserName,Nombre,DNI,Apellido,Telefono,Direccion,FechaAlta,Email")] Empleado empleado)
+        public IActionResult Edit(int id, [Bind("Id,UserName,Nombre,DNI,Apellido,Telefono,Direccion,Email")] Empleado empleado)
         {
             if (id != empleado.Id)
             {
@@ -104,6 +108,7 @@ namespace Reserva_C.Controllers
                     
                     if (empleadoEnDB != null)
                     {
+                        empleadoEnDB.UserName = empleado.UserName;
                         empleadoEnDB.Nombre = empleado.Nombre;
                         empleadoEnDB.Apellido = empleado.Apellido;
                         empleadoEnDB.DNI = empleado.DNI;

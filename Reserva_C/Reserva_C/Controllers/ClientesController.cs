@@ -54,7 +54,7 @@ namespace Reserva_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public  IActionResult Create([Bind("Id,UserName,Nombre,Apellido,DNI,Telefono,Direccion,FechaAlta,Email")] Cliente cliente)
+        public  IActionResult Create([Bind("Id,UserName,Nombre,Apellido,DNI,Telefono,Direccion,Email")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace Reserva_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public  IActionResult Edit(int id, [Bind("UserName,Nombre,Apellido,DNI,Telefono,Direccion,FechaAlta,Email")] Cliente cliente)
+        public  IActionResult Edit(int id, [Bind("Id,UserName,Nombre,Apellido,DNI,Telefono,Direccion,Email")] Cliente cliente)
         {
             if (id != cliente.Id)
             {
@@ -108,10 +108,10 @@ namespace Reserva_C.Controllers
                         clienteEnBD.Telefono = cliente.Telefono;
                         clienteEnBD.Direccion = cliente.Direccion;
                         clienteEnBD.Email = cliente.Email;
-
+                        
+                        _context.Update(clienteEnBD);
+                        _context.SaveChanges();
                     }
-                    _context.Update(cliente);
-                    _context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
