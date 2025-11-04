@@ -1,17 +1,18 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Reserva_C.Models
 {
-    public abstract class Persona
+    public class Persona : IdentityUser<int>
     {
         
-        public int Id { get; set; }
+        //public int Id { get; set; }
 
-        [Required(ErrorMessage = "{0} es requerido")]
+        /*[Required(ErrorMessage = "{0} es requerido")]
         [StringLength(20, MinimumLength = 4, ErrorMessage = "{0} debe tener entre {2} y {1} caracteres")]
         [Display(Name="Nombre de usuario")]
-        public string UserName { get; set; }
+        public string UserName { get; set; }*/
 
         [Required(ErrorMessage = "{0} es requerido")]
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "{0} solo puede contener letras.")]
@@ -36,9 +37,9 @@ namespace Reserva_C.Models
         
         public DateTime FechaAlta { get; set; } = DateTime.Now;
 
-        [Required(ErrorMessage = "{0} es requerido")]
+        /*[Required(ErrorMessage = "{0} es requerido")]
         [EmailAddress(ErrorMessage = "Formato {0} inválido.")]
         [StringLength(30, ErrorMessage = "{0} debe contener menos de {1} caracteres")]
-        public string Email { get; set; }
+        public string Email { get; set; }*/
     }
 }

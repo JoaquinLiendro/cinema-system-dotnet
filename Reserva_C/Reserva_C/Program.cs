@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Reserva_C.Data;
+using Reserva_C.Models;
 
 namespace Reserva_C
 {
@@ -15,6 +17,7 @@ namespace Reserva_C
 
             builder.Services.AddDbContext<ReservaContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ReservasDBCS")));
            
+            builder.Services.AddIdentity<Persona, IdentityRole<int>>().AddEntityFrameworkStores<ReservaContext>();
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();

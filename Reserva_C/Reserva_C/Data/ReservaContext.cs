@@ -1,15 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Reserva_C.Models;
 
 namespace Reserva_C.Data
 {
-    public class ReservaContext : DbContext 
+    public class ReservaContext : IdentityDbContext<IdentityUser<int>, IdentityRole<int>,int> 
     {
 
         public ReservaContext(DbContextOptions options): base (options) { 
         
         }
-
+        public DbSet<IdentityRole<int>> MisRoles { get; set; }
         public DbSet<Persona> Personas { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Empleado> Empleados { get; set; }
