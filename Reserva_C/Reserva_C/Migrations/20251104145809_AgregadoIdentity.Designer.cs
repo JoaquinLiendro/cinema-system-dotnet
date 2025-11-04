@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Reserva_C.Data;
 
@@ -11,9 +12,11 @@ using Reserva_C.Data;
 namespace Reserva_C.Migrations
 {
     [DbContext(typeof(ReservaContext))]
-    partial class ReservaContextModelSnapshot : ModelSnapshot
+    [Migration("20251104145809_AgregadoIdentity")]
+    partial class AgregadoIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

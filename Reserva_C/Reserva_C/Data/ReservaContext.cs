@@ -11,6 +11,15 @@ namespace Reserva_C.Data
         public ReservaContext(DbContextOptions options): base (options) { 
         
         }
+
+        protected override void OnModelCreating(ModelBuilder modelbuilder)
+        {
+            base.OnModelCreating(modelbuilder);
+
+            modelbuilder.Entity<IdentityUser<int>>().ToTable("Personas");
+            modelbuilder.Entity<IdentityRole<int>>().ToTable("Roles");
+            modelbuilder.Entity<IdentityUserRole<int>>().ToTable("PersonasRoles");
+        }
         public DbSet<IdentityRole<int>> MisRoles { get; set; }
         public DbSet<Persona> Personas { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
