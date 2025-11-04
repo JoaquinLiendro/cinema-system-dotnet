@@ -37,9 +37,13 @@ namespace Reserva_C.Models
         
         public DateTime FechaAlta { get; set; } = DateTime.Now;
 
-        /*[Required(ErrorMessage = "{0} es requerido")]
+        [Required(ErrorMessage = "{0} es requerido")]
         [EmailAddress(ErrorMessage = "Formato {0} inválido.")]
         [StringLength(30, ErrorMessage = "{0} debe contener menos de {1} caracteres")]
-        public string Email { get; set; }*/
+        public override string Email
+        {
+            get { return base.Email; }
+            set { base.Email = value; }
+        }
     }
 }
