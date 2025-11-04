@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Reserva_C.Data;
@@ -12,9 +13,8 @@ namespace Reserva_C
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddDbContext<ReservaContext>(options => options.UseInMemoryDatabase("Reserva DataBase"));
-
-            // Add services to the container.
+            builder.Services.AddDbContext<ReservaContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ReservasDBCS")));
+           
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();

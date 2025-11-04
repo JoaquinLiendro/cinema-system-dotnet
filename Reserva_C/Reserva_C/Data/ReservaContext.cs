@@ -10,6 +10,7 @@ namespace Reserva_C.Data
         
         }
 
+        public DbSet<Persona> Personas { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Empleado> Empleados { get; set; }
         public DbSet<Funcion> Funciones { get; set; }
