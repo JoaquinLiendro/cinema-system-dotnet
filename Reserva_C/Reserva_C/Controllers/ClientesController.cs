@@ -99,19 +99,21 @@ namespace Reserva_C.Controllers
                 {
                     var clienteEnBD = _context.Clientes.Find(id);
                     
-                    if(clienteEnBD != null)
+                    if(clienteEnBD == null)
                     {
-                        clienteEnBD.UserName = cliente.UserName;
-                        clienteEnBD.Nombre = cliente.Nombre;
-                        clienteEnBD.Apellido = cliente.Apellido;    
-                        clienteEnBD.DNI = cliente.DNI;
-                        clienteEnBD.Telefono = cliente.Telefono;
-                        clienteEnBD.Direccion = cliente.Direccion;
-                        clienteEnBD.Email = cliente.Email;
-                        
-                        _context.Update(clienteEnBD);
-                        _context.SaveChanges();
+                        return NotFound();
                     }
+
+                    clienteEnBD.UserName = cliente.UserName;
+                    clienteEnBD.Nombre = cliente.Nombre;
+                    clienteEnBD.Apellido = cliente.Apellido;
+                    clienteEnBD.DNI = cliente.DNI;
+                    clienteEnBD.Telefono = cliente.Telefono;
+                    clienteEnBD.Direccion = cliente.Direccion;
+                    clienteEnBD.Email = cliente.Email;
+
+                    _context.Update(clienteEnBD);
+                    _context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {

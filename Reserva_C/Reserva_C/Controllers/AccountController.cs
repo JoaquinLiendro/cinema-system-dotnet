@@ -38,7 +38,7 @@ namespace Reserva_C.Controllers
                 if (resultadoCreate.Succeeded) {
                     
                     await _signInManager.SignInAsync(nuevoCliente, isPersistent:false);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Edit", "Clientes", new {id = nuevoCliente.Id});
                 }
                 
                 foreach(var error in resultadoCreate.Errors)
@@ -49,6 +49,30 @@ namespace Reserva_C.Controllers
             }
 
             return View(registroUsuario);
+        }
+
+        public IActionResult IniciarSesion()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> IniciarSesion(Login usuario)
+        {
+            if (ModelState.IsValid)
+            {
+                var resultado = await _signInManager.PasswordSignInAsync(usuario.Email, usuario.Password, usuario.Recordarme, false);
+
+                if (resultado.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                ModelState.AddModelError(string.Empty, "Inicio de sesion invalida");
+                
+                
+            }
+
+            return View(usuario);
         }
     }
 }

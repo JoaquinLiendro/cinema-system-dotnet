@@ -23,7 +23,7 @@ namespace Reserva_C.Controllers
         // GET: Empleados
         public IActionResult Index()
         {
-            return View( _context.Empleados.ToListAsync());
+            return View( _context.Empleados.ToList());
         }
 
         // GET: Empleados/Details/5
@@ -34,7 +34,7 @@ namespace Reserva_C.Controllers
                 return NotFound();
             }
 
-            var empleado =  _context.Empleados.FirstOrDefaultAsync(m => m.Id == id);
+            var empleado =  _context.Empleados.FirstOrDefault(m => m.Id == id);
             
             if (empleado == null)
             {
