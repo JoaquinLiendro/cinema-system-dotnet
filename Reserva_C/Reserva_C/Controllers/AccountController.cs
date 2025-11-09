@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Reserva_C.Models;
 using Reserva_C.Models.ViewModels;
@@ -73,6 +74,13 @@ namespace Reserva_C.Controllers
             }
 
             return View(usuario);
+        }
+
+        public async Task<IActionResult> CerrarSesion()
+        {
+            await _signInManager.SignOutAsync();
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

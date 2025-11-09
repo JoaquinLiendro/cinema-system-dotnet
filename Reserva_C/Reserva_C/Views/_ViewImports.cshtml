@@ -1,4 +1,7 @@
 ﻿@using Reserva_C
 @using Reserva_C.Models
 @using Reserva_C.Models.ViewModels 
+@using Microsoft.AspNetCore.Identity
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@inject SignInManager<Persona> signInManager
