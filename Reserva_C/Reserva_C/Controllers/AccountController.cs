@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Reserva_C.Helpers;
 using Reserva_C.Models;
 using Reserva_C.Models.ViewModels;
 using System.Threading.Tasks;
@@ -37,9 +38,20 @@ namespace Reserva_C.Controllers
                 var resultadoCreate = await _usermanager.CreateAsync(nuevoCliente, registroUsuario.Password);
 
                 if (resultadoCreate.Succeeded) {
-                    
-                    await _signInManager.SignInAsync(nuevoCliente, isPersistent:false);
-                    return RedirectToAction("Edit", "Clientes", new {id = nuevoCliente.Id});
+
+                    var resultadoAddRole = await _usermanager.AddToRoleAsync(nuevoCliente, Configs.ClienteRolName);
+
+                    if (resultadoAddRole.Succeeded)
+                    {   
+                        await _signInManager.SignInAsync(nuevoCliente, isPersistent: false);
+                        return RedirectToAction("Edit", "Clientes", new { id = nuevoCliente.Id });
+                    }
+                    else 
+                    {
+                        ModelState.AddModelError(string.Empty, $"No se pudo agregar el rol de {Configs.ClienteRolName}");
+                    }
+
+            
                 }
                 
                 foreach(var error in resultadoCreate.Errors)
