@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,13 +13,17 @@ using Reserva_C.Models;
 
 namespace Reserva_C.Controllers
 {
+
+    [Authorize(Roles = Configs.EmpleadoRolName)]
     public class EmpleadosController : Controller
     {
         private readonly ReservaContext _context;
+        private readonly UserManager<Persona> _userManager;
 
-        public EmpleadosController(ReservaContext context)
+        public EmpleadosController(ReservaContext context,UserManager<Persona> userManager)
         {
             _context = context;
+            this._userManager = userManager;
         }
 
         // GET: Empleados
@@ -27,6 +33,7 @@ namespace Reserva_C.Controllers
         }
 
         // GET: Empleados/Details/5
+        
         public  IActionResult Details(int? id)
         {
             if (id == null)
@@ -45,6 +52,8 @@ namespace Reserva_C.Controllers
         }
 
         // GET: Empleados/Create
+
+        
         public IActionResult Create()
         {
             return View();
@@ -55,22 +64,38 @@ namespace Reserva_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public  IActionResult Create([Bind("Id,UserName,Nombre,Apellido,DNI,Telefono,Direccion,Email")] Empleado empleado)
+        
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,DNI,Telefono,Direccion,Email")] Empleado empleado)
         {
             if (ModelState.IsValid)
             {
                
-                empleado.Legajo = Generadores.GetNextLegajo(_context); ;
-                _context.Add(empleado);
+                empleado.Legajo = Generadores.GetNextLegajo(_context); 
+                empleado.UserName = empleado.Email;
                 
+                //Creas el empleado, ya no mas directo al context sino usando usermanager.
+                var resultado = await _userManager.CreateAsync(empleado, Configs.PasswordGenerica);
                 
-                _context.SaveChangesAsync();
+                if (resultado.Succeeded)
+                {
+                    //agrego el rol de empleado
+                    
+                    var resultadoAddRol = await _userManager.AddToRoleAsync(empleado, Configs.EmpleadoRolName);
+
+                    if (resultadoAddRol.Succeeded)
+                    {
+                        return RedirectToAction("Index", "Empleados");
+                    }
+                    
+                }
+                
                 return RedirectToAction(nameof(Index));
             }
             return View(empleado);
         }
 
         // GET: Empleados/Edit/5
+        
         public  IActionResult Edit(int? id)
         {
             if (id == null)
@@ -91,6 +116,7 @@ namespace Reserva_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        
         public IActionResult Edit(int id, [Bind("Id,UserName,Nombre,DNI,Apellido,Telefono,Direccion,Email")] Empleado empleado)
         {
             if (id != empleado.Id)
@@ -141,6 +167,8 @@ namespace Reserva_C.Controllers
         }
 
         // GET: Empleados/Delete/5
+
+        
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -160,6 +188,7 @@ namespace Reserva_C.Controllers
         // POST: Empleados/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var empleado = await _context.Empleados.FindAsync(id);

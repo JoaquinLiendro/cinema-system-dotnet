@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Reserva_C.Helpers
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -52,6 +53,12 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="CerrarSesion">Cerrar sesion</a>
                             </li>
+                            @if (User.IsInRole(Configs.EmpleadoRolName))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Empleados" asp-action="Index">Empleados</a>
+                                </li>
+                            }
                         }
                         else
                         {

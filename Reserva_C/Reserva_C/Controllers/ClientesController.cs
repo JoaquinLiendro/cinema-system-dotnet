@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Reserva_C.Data;
+using Reserva_C.Helpers;
 using Reserva_C.Models;
 
 namespace Reserva_C.Controllers
@@ -13,10 +15,12 @@ namespace Reserva_C.Controllers
     public class ClientesController : Controller
     {
         private readonly ReservaContext _context;
+        private readonly UserManager<Persona> _userManager;
 
-        public ClientesController(ReservaContext context)
+        public ClientesController(ReservaContext context,UserManager<Persona> userManager)
         {
             _context = context;
+            this._userManager = userManager;
         }
 
         // GET: Clientes
@@ -32,6 +36,20 @@ namespace Reserva_C.Controllers
             {
                 return NotFound();
             }
+
+            //Si es un cliente, entonces solamente quiero ver sus propios detalles.
+            if (User.IsInRole(Configs.ClienteRolName))
+            {
+                //solo le voy a mostrar el suyo.
+                var usuarioId = Int32.Parse(_userManager.GetUserId(User));
+
+                if (id != usuarioId)
+                {
+                    return RedirectToAction("Details", new { id = usuarioId });
+                }
+            }
+
+
 
             var cliente = _context.Clientes.FirstOrDefault(m => m.Id == id);
             
