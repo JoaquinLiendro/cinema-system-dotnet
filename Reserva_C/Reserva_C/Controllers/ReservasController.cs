@@ -107,13 +107,20 @@ namespace Reserva_C.Controllers
                 try
                 {
                     var reservaEnDb = _context.Reservas.Find(reserva.Id);
-                    if (reservaEnDb == null)
+                    if (reservaEnDb != null)
                     {
                         // Actualizamos:
+                        reservaEnDb.Activa = reserva.Activa;
+                        reservaEnDb.CantButacas = reserva.CantButacas;
+                        reservaEnDb.FechaAlta = reserva.FechaAlta;
 
+                        _context.Reservas.Update(reservaEnDb);
+                        _context.SaveChanges();
                     }
-                    _context.Reservas.Update(reserva);
-                    _context.SaveChanges();
+                    else
+                    {
+                        return NotFound();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {

@@ -102,8 +102,19 @@ namespace Reserva_C.Controllers
             {
                 try
                 {
-                    _context.Salas.Update(sala);
-                    _context.SaveChanges();
+                    var salaEnDb = _context.Salas.Find(sala.Id);
+                    if (salaEnDb != null)
+                    {
+                        salaEnDb.Numero = sala.Numero;
+                        salaEnDb.CapacidadButacas = sala.CapacidadButacas;
+
+                        _context.Salas.Update(salaEnDb);
+                        _context.SaveChanges();
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
