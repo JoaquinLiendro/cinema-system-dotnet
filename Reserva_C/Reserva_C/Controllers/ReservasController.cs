@@ -97,7 +97,7 @@ namespace Reserva_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("Id,Activa,CantButacas,FechaAlta,FuncionId,ClienteId,IdFuncion")] Reserva reserva)
+        public IActionResult Edit(int id, [Bind("Id,Activa,CantButacas,FechaAlta,FuncionId,ClienteId")] Reserva reserva)
         {
             if (id != reserva.Id)
             {
@@ -108,8 +108,21 @@ namespace Reserva_C.Controllers
             {
                 try
                 {
-                    _context.Update(reserva);
-                    _context.SaveChanges();
+                    var reservaEnDb = _context.Reservas.Find(reserva.Id);
+                    if (reservaEnDb != null)
+                    {
+                        // Actualizamos:
+                        reservaEnDb.Activa = reserva.Activa;
+                        reservaEnDb.CantButacas = reserva.CantButacas;
+                        reservaEnDb.FechaAlta = reserva.FechaAlta;
+
+                        _context.Reservas.Update(reservaEnDb);
+                        _context.SaveChanges();
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {

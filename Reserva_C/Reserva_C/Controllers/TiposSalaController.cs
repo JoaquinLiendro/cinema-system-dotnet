@@ -59,7 +59,7 @@ namespace Reserva_C.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tipoSala);
+                _context.TiposSala.Add(tipoSala);
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
@@ -98,8 +98,19 @@ namespace Reserva_C.Controllers
             {
                 try
                 {
-                    _context.Update(tipoSala);
-                    _context.SaveChanges();
+                    var tipoSalaEnDb = _context.TiposSala.Find(tipoSala.Id);
+                    if (tipoSalaEnDb != null)
+                    {
+                        tipoSalaEnDb.Nombre = tipoSala.Nombre;
+                        tipoSalaEnDb.Precio = tipoSala.Precio;
+
+                        _context.TiposSala.Update(tipoSalaEnDb);
+                        _context.SaveChanges();
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
