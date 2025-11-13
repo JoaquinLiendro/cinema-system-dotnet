@@ -61,7 +61,7 @@ namespace Reserva_C.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(sala);
+                _context.Salas.Add(sala);
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
@@ -102,7 +102,7 @@ namespace Reserva_C.Controllers
             {
                 try
                 {
-                    _context.Update(sala);
+                    _context.Salas.Update(sala);
                     _context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)

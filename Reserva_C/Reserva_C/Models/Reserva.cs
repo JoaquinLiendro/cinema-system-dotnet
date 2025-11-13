@@ -31,7 +31,7 @@ namespace Reserva_C.Models
         //Propiedades Relacionales
 
         public int ClienteId { get; set; }
-        public int IdFuncion { get; set; }
+        //public int IdFuncion { get; set; }
 
     }
 }
