@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,6 +13,7 @@ using Reserva_C.Models;
 
 namespace Reserva_C.Controllers
 {
+    [Authorize]
     public class ClientesController : Controller
     {
         private readonly ReservaContext _context;

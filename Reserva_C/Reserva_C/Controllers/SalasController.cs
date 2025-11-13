@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Reserva_C.Data;
+using Reserva_C.Helpers;
 using Reserva_C.Models;
 
 namespace Reserva_C.Controllers
 {
+    [Authorize(Roles = Configs.EmpleadoRolName)]
     public class SalasController : Controller
     {
         private readonly ReservaContext _context;

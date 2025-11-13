@@ -6,12 +6,6 @@ namespace Reserva_C.Models
 {
     public class Pelicula
     {
-        //        - Titulo
-        //- Descripcion
-        //- FechaLanzamiento
-        //- Foto
-        //- Funciones
-        //- Genero(enum)
 
         public int Id { get; set; }
         [Required(ErrorMessage = "el campo {0} es requerido")]

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,15 @@ namespace Reserva_C
             builder.Services.AddDbContext<ReservaContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ReservasDBCS")));
            
             builder.Services.AddIdentity<Persona, IdentityRole<int>>().AddEntityFrameworkStores<ReservaContext>();
+
+            builder.Services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
+                options =>
+                {
+                    options.LoginPath = "/Account/Iniciarsesion";
+                    options.AccessDeniedPath = "/Account/AccesoDenegado";
+                    options.Cookie.Name = "IdentidadReservaApp";
+                });
+
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
