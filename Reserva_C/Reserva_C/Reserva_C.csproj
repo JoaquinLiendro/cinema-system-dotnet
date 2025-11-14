@@ -20,8 +20,4 @@
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore" Version="9.0.0" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="wwwroot\img\" />
-	</ItemGroup>
-
 </Project>

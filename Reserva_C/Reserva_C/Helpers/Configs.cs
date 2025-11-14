@@ -6,5 +6,6 @@
         public const string AdminRolName = "Admin";
         public const string EmpleadoRolName = "Empleado";
         public const string ClienteRolName = "Cliente";
+        public const string FotoDef = "default.png"; 
     }
 }

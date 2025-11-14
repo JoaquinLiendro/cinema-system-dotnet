@@ -1,22 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Hosting.Internal;
 using Reserva_C.Data;
 using Reserva_C.Models;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Reserva_C.Controllers
 {
     public class PeliculasController : Controller
     {
         private readonly ReservaContext _context;
+        private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _hostingEnvironment;
 
-        public PeliculasController(ReservaContext context)
+        public PeliculasController(ReservaContext context, IWebHostEnvironment hostingEnvironment)
         {
-            _context = context;
+            this._context = context;
+            this._hostingEnvironment = (Microsoft.AspNetCore.Hosting.IHostingEnvironment)hostingEnvironment;
+          
         }
 
         // GET: Peliculas
@@ -53,16 +60,54 @@ namespace Reserva_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id,Titulo,Descripcion,FechaLanzamiento,Foto,Genero,GeneroId")] Pelicula pelicula)
+        public IActionResult Create([Bind("Id,Titulo,Descripcion,FechaLanzamiento,FotoArchivo,Genero")] Pelicula pelicula)
         {
+            string rootPath = _hostingEnvironment.WebRootPath;
+            string fotoPath = "img\\fotos";
+
             if (ModelState.IsValid)
             {
-                _context.Peliculas.Add(pelicula);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                if (pelicula.FotoArchivo != null)
+                {
+
+                    string nombreArchivoUnico = null;
+
+                    if (!string.IsNullOrEmpty(rootPath) && !string.IsNullOrEmpty(fotoPath) && pelicula.FotoArchivo != null)
+                    {
+                        try
+                        {
+                            string carpetaDestino = Path.Combine(rootPath, fotoPath);
+
+                            nombreArchivoUnico = Guid.NewGuid().ToString() + Path.GetExtension(pelicula.FotoArchivo.FileName);
+
+                            string rutaCompletaArchivo = Path.Combine(carpetaDestino, nombreArchivoUnico);
+
+                            pelicula.FotoArchivo.CopyTo(new FileStream(rutaCompletaArchivo, FileMode.Create));
+
+                            pelicula.Foto = nombreArchivoUnico;
+
+                            if (!string.IsNullOrEmpty(pelicula.Foto)) 
+                            {
+                                _context.Peliculas.Add(pelicula);
+                                _context.SaveChanges();
+                                return RedirectToAction("Index", "Peliculas");
+                            }
+                           
+                        }
+                        catch
+                        {
+                            ModelState.AddModelError(string.Empty, "Error en el proceso de carga");
+                        }
+                    }
+
+
+                }
+               
             }
             return View(pelicula);
         }
+
+
 
         // GET: Peliculas/Edit/5
         public IActionResult Edit(int? id)
@@ -167,5 +212,7 @@ namespace Reserva_C.Controllers
         {
             return _context.Peliculas.Any(e => e.Id == id);
         }
+
+        
     }
 }
