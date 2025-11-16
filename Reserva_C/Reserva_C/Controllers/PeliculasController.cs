@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -130,7 +131,7 @@ namespace Reserva_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("Id,Titulo,Descripcion,FechaLanzamiento,Foto,Genero")] Pelicula pelicula)
+        public IActionResult Edit(int id, [Bind("Id,Titulo,Descripcion,FechaLanzamiento,FotoArchivo,Genero")] Pelicula pelicula)
         {
             if (id != pelicula.Id)
             {
@@ -139,11 +140,33 @@ namespace Reserva_C.Controllers
 
             if (ModelState.IsValid)
             {
+
                 try
                 {
                     var peliculaEnDB = _context.Peliculas.Find(pelicula.Id);
+
+
                     if (peliculaEnDB != null)
                     {
+
+                        if (pelicula.FotoArchivo == null) 
+                        {
+                            pelicula.Foto = peliculaEnDB.Foto;
+                        }
+                        else
+                        {
+                            string nombreFoto = asignarFoto(pelicula);
+                            
+                            if(nombreFoto != null)
+                            {
+                                pelicula.Foto = nombreFoto;
+                            }
+                            else
+                            {
+                                pelicula.Foto = peliculaEnDB.Foto;
+                            }
+                        }
+
                         peliculaEnDB.Titulo = pelicula.Titulo;
                         peliculaEnDB.Descripcion = pelicula.Descripcion;
                         peliculaEnDB.FechaLanzamiento = pelicula.FechaLanzamiento;
@@ -213,6 +236,34 @@ namespace Reserva_C.Controllers
             return _context.Peliculas.Any(e => e.Id == id);
         }
 
+        public string asignarFoto (Pelicula pelicula)
+        {
+            string rootPath = _hostingEnvironment.WebRootPath;
+            string fotoPath = "img\\fotos";
+
+            string nombreArchivoUnico = null;
+
+            if (!string.IsNullOrEmpty(rootPath) && !string.IsNullOrEmpty(fotoPath) && pelicula.FotoArchivo != null)
+            {
+                try
+                {
+                    string carpetaDestino = Path.Combine(rootPath, fotoPath);
+
+                    nombreArchivoUnico = Guid.NewGuid().ToString() + Path.GetExtension(pelicula.FotoArchivo.FileName);
+
+                    string rutaCompletaArchivo = Path.Combine(carpetaDestino, nombreArchivoUnico);
+
+                    pelicula.FotoArchivo.CopyTo(new FileStream(rutaCompletaArchivo, FileMode.Create));                    
+
+                }
+                catch
+                {
+                    ModelState.AddModelError(string.Empty, "Error en el proceso de carga");
+                }
+            }
+
+            return nombreArchivoUnico;
+        }
         
     }
 }

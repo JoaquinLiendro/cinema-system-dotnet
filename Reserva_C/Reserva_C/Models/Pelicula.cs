@@ -24,7 +24,7 @@ namespace Reserva_C.Models
         [DataType(DataType.Date)]
         public DateOnly FechaLanzamiento { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es requerido")]
+        //[Required(ErrorMessage = "El campo {0} es requerido")]
         [NotMapped] 
         public IFormFile FotoArchivo { get; set; }
 
